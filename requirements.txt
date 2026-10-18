@@ -1,0 +1,9 @@
+# Disarankan: samakan versi transformers/torch dengan yang dipakai saat training di Kaggle
+# (lihat output print(transformers.__version__) dan print(torch.__version__) di notebook 02/03),
+# lalu pin di sini, misalnya: transformers==X.Y.Z
+streamlit
+transformers
+torch
+shap
+pandas
+numpy
