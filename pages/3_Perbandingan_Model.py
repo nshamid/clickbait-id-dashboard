@@ -27,8 +27,10 @@ st.dataframe(pd.DataFrame(baris), hide_index=True)
 
 st.subheader("3. Uji signifikansi: McNemar's test (exact)")
 tabel = pd.DataFrame(
-    [[MCNEMAR["both_correct"], MCNEMAR["only_indobert"]],
-     [MCNEMAR["only_xlmr"], MCNEMAR["both_wrong"]]],
+    [
+        [MCNEMAR["both_correct"], MCNEMAR["only_xlmr"]],
+        [MCNEMAR["only_indobert"], MCNEMAR["both_wrong"]],
+    ],
     index=["XLM-R benar", "XLM-R salah"],
     columns=["IndoBERT benar", "IndoBERT salah"],
 )
@@ -42,8 +44,11 @@ st.markdown(
 st.subheader("4. Analisis kesalahan berdasarkan kesepakatan annotator")
 st.dataframe(ERROR_BY_AGREEMENT.style.format("{:.1%}"))
 st.caption(
-    "Pada judul yang tidak disepakati annotator, porsi 'keduanya salah' jauh lebih besar "
-    "(19,1% vs 2,6%). Sebagian kesalahan model berasal dari label yang memang ambigu."
+    "Proporsi kedua model salah adalah 24,0% pada kelompok "
+    "annotator tidak sepakat, dibandingkan 2,9% pada kelompok "
+    "annotator sepakat. Ini menunjukkan hubungan antara "
+    "kesepakatan annotator dan kesalahan model, "
+    "bukan bukti penyebab kesalahan."
 )
 
 st.subheader("5. Interpretabilitas SHAP")
@@ -52,6 +57,14 @@ st.markdown(
     f"- Tumpang tindih 30 kata teratas (muncul minimal 3 kali): **{SHAP_SUMMARY['overlap']}**\n"
     f"- Entropi atribusi rata-rata: IndoBERT **{SHAP_SUMMARY['entropy_indobert']:.4f}**, "
     f"XLM-R **{SHAP_SUMMARY['entropy_xlmr']:.4f}**"
+)
+st.caption(
+    "Analisis SHAP menggunakan 200 judul dengan memperbanyak "
+    "kasus kesalahan, sehingga tidak mewakili distribusi seluruh "
+    "test set. Kata diurutkan berdasarkan rata-rata nilai absolut "
+    "SHAP pada kemunculannya, dengan frekuensi minimal tiga kali. "
+    "Entropi kedua model hampir sama dan tidak cukup untuk "
+    "menyatakan salah satunya lebih mudah diinterpretasikan."
 )
 
 f_ind = DATA_DIR / "indobert_top30_words.csv"
