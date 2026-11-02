@@ -4,7 +4,13 @@ import streamlit as st
 import torch
 from transformers import pipeline
 
-from .config import INDOBERT_REPO, MAX_LEN, XLMR_REPO
+from .config import (
+    INDOBERT_REPO,
+    INDOBERT_REVISION,
+    XLMR_REPO,
+    XLMR_REVISION,
+    MAX_LEN,
+)
 
 
 def _device() -> int:
