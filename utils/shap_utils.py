@@ -1,25 +1,45 @@
-"""SHAP level kata. Masker berbasis kata dipakai agar adil antar tokenizer berbeda."""
+"""Interpretasi SHAP dengan konfigurasi eksperimen baru."""
 
 import numpy as np
 import shap
-import streamlit as st
 
 from .config import CLICKBAIT_LABEL
 
 
-@st.cache_resource(show_spinner=False)
-def get_explainer(_pipe, key: str):
+def get_explainer(pipe, key: str):
     masker = shap.maskers.Text(tokenizer=r"\W+")
-    return shap.Explainer(_pipe, masker)
+
+    model = shap.models.TransformersPipeline(
+        pipe,
+        rescale_to_logits=False,
+    )
+
+    return shap.Explainer(
+        model,
+        masker,
+        algorithm="partition",
+    )
 
 
 def explain(explainer, pipe, text: str):
-    """Kembalikan (daftar kata, nilai SHAP untuk kelas clickbait)."""
-    sv = explainer([text])
-    try:
-        idx = list(sv.output_names).index(CLICKBAIT_LABEL)
-    except Exception:
-        idx = pipe.model.config.label2id.get(CLICKBAIT_LABEL, 1)
+    """Kembalikan segmen dan atribusi probabilitas kelas clickbait."""
+    sv = explainer(
+        [text],
+        max_evals=500,
+        batch_size=16,
+    )
+
+    output_names = list(sv.output_names)
+
+    if CLICKBAIT_LABEL not in output_names:
+        raise ValueError(
+            f"Label {CLICKBAIT_LABEL!r} tidak ditemukan: "
+            f"{output_names}"
+        )
+
+    idx = output_names.index(CLICKBAIT_LABEL)
+
     tokens = list(sv.data[0])
-    values = np.array(sv.values[0])[:, idx]
+    values = np.asarray(sv.values[0])[:, idx]
+
     return tokens, values
