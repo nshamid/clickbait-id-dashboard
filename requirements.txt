@@ -2,8 +2,8 @@
 # (lihat output print(transformers.__version__) dan print(torch.__version__) di notebook 02/03),
 # lalu pin di sini, misalnya: transformers==X.Y.Z
 streamlit
-transformers
+transformers==4.57.1
 torch
-shap
+shap==0.48.0
 pandas
 numpy
