@@ -11,7 +11,7 @@ st.markdown(
     f"""
 Clickbait adalah judul yang sengaja memancing rasa penasaran agar diklik, sering kali tanpa
 menyampaikan isi berita yang sebenarnya. Penelitian ini membandingkan dua arsitektur transformer
-untuk mendeteksinya pada dataset **{DATASET['nama']}** ({DATASET['total_awal']:,} judul berita
+untuk mendeteksinya pada dataset **{DATASET['nama']}** ({format(DATASET['total_awal'], ',').replace(',', '.')} judul berita
 berlabel dari beberapa media daring Indonesia), lalu menjelaskan keputusan model dengan **SHAP**.
 """
 )
