@@ -17,8 +17,10 @@ st.markdown(
    learning rate dipilih pada set validasi, model final = seed dengan F1 validasi tertinggi.
 4. **Evaluasi**: accuracy, precision, recall, F1 (macro), McNemar's test, dan analisis kesalahan
    berdasarkan kesepakatan annotator.
-5. **Interpretabilitas**: SHAP dengan masker level kata agar atribusi kedua model sebanding
-   walaupun tokenizer internalnya berbeda.
+5. **Interpretabilitas**: SHAP Partition menggunakan segmentasi teks
+   berbasis regex yang sama untuk kedua model, dengan atribusi pada
+   skala probabilitas. Analisis dilakukan pada 200 judul yang dipilih
+   dengan memperbanyak kasus kesalahan.
 """.replace(",", ".")
 )
 
@@ -32,8 +34,10 @@ st.markdown(
   disepakati penuh), sehingga akurasi tidak mendekati 100% dan hasil model bukan kebenaran mutlak.
 - Model dilatih pada judul berita daring Indonesia dari sumber tertentu; performa pada gaya judul
   atau domain lain (media sosial, iklan) belum diuji.
-- SHAP adalah perkiraan kontribusi kata, bukan penjelasan sebab-akibat; analisis kata dalam
-  penelitian memakai sampel kecil (181 judul).
+- SHAP memperkirakan kontribusi segmen teks terhadap prediksi,
+  bukan hubungan sebab-akibat. Analisis penelitian menggunakan
+  200 judul dengan memperbanyak kasus kesalahan, sehingga hasilnya
+  tidak mewakili seluruh test set.
 - Riwayat uji coba disimpan di file lokal dan dapat hilang ketika aplikasi di-restart oleh platform hosting.
 - Hanya judul yang dianalisis, bukan isi berita.
 """
