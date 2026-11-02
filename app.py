@@ -27,10 +27,17 @@ for col, name in zip((c1, c2), ("IndoBERT", "XLM-RoBERTa")):
         b.metric("F1 (macro)", f"{m['F1 (macro)']:.2%}")
 
 total_beda = MCNEMAR["only_indobert"] + MCNEMAR["only_xlmr"]
+
 st.success(
-    f"XLM-RoBERTa unggul signifikan secara statistik (McNemar's test, p < 0,001): "
-    f"benar sendirian pada {MCNEMAR['only_xlmr']} judul, dibanding {MCNEMAR['only_indobert']} judul "
-    f"untuk IndoBERT, dari {total_beda} judul yang diprediksi berbeda."
+    f"Model final XLM-RoBERTa memperoleh accuracy lebih tinggi "
+    f"daripada IndoBERT. Perbedaan benar/salah prediksi signifikan "
+    f"pada taraf 5% (McNemar exact, "
+    f"p = {MCNEMAR['p_value']:.4f}): "
+    f"XLM-RoBERTa benar ketika IndoBERT salah pada "
+    f"{MCNEMAR['only_xlmr']} judul, sedangkan IndoBERT benar "
+    f"ketika XLM-RoBERTa salah pada "
+    f"{MCNEMAR['only_indobert']} judul, "
+    f"dari {total_beda} judul yang diprediksi berbeda."
 )
 
 st.info(
