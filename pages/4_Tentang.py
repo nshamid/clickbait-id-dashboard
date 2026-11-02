@@ -8,11 +8,11 @@ st.title("ℹ️ Tentang Penelitian")
 st.subheader("Metodologi")
 st.markdown(
     f"""
-1. **Dataset**: {DATASET['nama']}, {DATASET['total_awal']:,} judul berlabel clickbait / non-clickbait
-   ({DATASET['clickbait']:,} clickbait, {DATASET['non_clickbait']:,} non-clickbait).
+1. **Dataset**: {DATASET['nama']}, {format(DATASET['total_awal'], ',').replace(',', '.')} judul berlabel clickbait / non-clickbait
+   ({format(DATASET['clickbait'], ',').replace(',', '.')} clickbait, {format(DATASET['non_clickbait'], ',').replace(',', '.')} non-clickbait).
 2. **Pra-pemrosesan**: pembersihan duplikat (termasuk judul kembar berlabel konflik) menyisakan
-   {DATASET['setelah_dedup']:,} judul, dibagi stratified 80/10/10 menjadi train {DATASET['train']:,},
-   validasi {DATASET['val']:,}, dan test {DATASET['test']:,} dengan pembagian yang sama untuk kedua model.
+   {format(DATASET['setelah_dedup'], ',').replace(',', '.')} judul, dibagi stratified 80/10/10 menjadi train {format(DATASET['train'], ',').replace(',', '.')},
+   validasi {format(DATASET['val'], ',').replace(',', '.')}, dan test {format(DATASET['test'], ',').replace(',', '.')} dengan pembagian yang sama untuk kedua model.
 3. **Model**: fine-tuning IndoBERT (monolingual) dan XLM-RoBERTa (multilingual), tiga seed per model,
    learning rate dipilih pada set validasi, model final = seed dengan F1 validasi tertinggi.
 4. **Evaluasi**: accuracy, precision, recall, F1 (macro), McNemar's test, dan analisis kesalahan
