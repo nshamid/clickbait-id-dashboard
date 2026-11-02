@@ -21,7 +21,7 @@ st.markdown(
    berbasis regex yang sama untuk kedua model, dengan atribusi pada
    skala probabilitas. Analisis dilakukan pada 200 judul yang dipilih
    dengan memperbanyak kasus kesalahan.
-""".replace(",", ".")
+"""
 )
 
 st.subheader("Konfigurasi pelatihan")
