@@ -14,7 +14,7 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 st.subheader("1. Metrik pada test set (model final, seed terbaik)")
 dfm = pd.DataFrame(BEST_SEED_METRICS)
 st.dataframe(dfm.style.format("{:.4f}"))
-st.bar_chart(dfm)
+st.bar_chart(dfm, stack=False)
 
 st.subheader("2. Stabilitas antar seed (rata-rata ± std, 3 seed)")
 baris = []
