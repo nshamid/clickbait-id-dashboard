@@ -17,11 +17,14 @@ def _device() -> int:
     return 0 if torch.cuda.is_available() else -1
 
 
-@st.cache_resource(show_spinner="Memuat model dari Hugging Face (pertama kali bisa beberapa menit)...")
-def load_pipeline(repo_id: str):
+@st.cache_resource(
+    show_spinner="Memuat model dari Hugging Face..."
+)
+def load_pipeline(repo_id: str, revision: str):
     return pipeline(
         "text-classification",
         model=repo_id,
+        revision=revision,
         top_k=None,
         truncation=True,
         max_length=MAX_LEN,
@@ -31,8 +34,12 @@ def load_pipeline(repo_id: str):
 
 def get_models() -> dict:
     return {
-        "IndoBERT": load_pipeline(INDOBERT_REPO),
-        "XLM-RoBERTa": load_pipeline(XLMR_REPO),
+        "IndoBERT": load_pipeline(
+            INDOBERT_REPO, INDOBERT_REVISION
+        ),
+        "XLM-RoBERTa": load_pipeline(
+            XLMR_REPO, XLMR_REVISION
+        ),
     }
 
 
